@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bdqsr1nvvrdt6"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_lcm86"]
+[ext_resource type="Script" path="res://scripts/xr-initializer.gd" id="1_i8hff"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dop1b"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -21,7 +21,7 @@ size = Vector2(10, 10)
 size = Vector3(10, 1, 10)
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_lcm86")
+script = ExtResource("1_i8hff")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_xtr8f")
@@ -48,19 +48,3 @@ tracker = &"left_hand"
 
 [node name="RightController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"right_hand"
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Button" type="Button" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -75.0
-offset_right = 150.0
-offset_bottom = 75.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Enter VR"
