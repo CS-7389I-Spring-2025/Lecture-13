@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdqsr1nvvrdt6"]
+[gd_scene load_steps=12 format=3 uid="uid://bdqsr1nvvrdt6"]
 
 [ext_resource type="Script" path="res://scripts/xr-initializer.gd" id="1_i8hff"]
 
@@ -20,6 +20,22 @@ size = Vector2(10, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ecctn"]
 size = Vector3(10, 1, 10)
 
+[sub_resource type="SphereMesh" id="SphereMesh_5x4td"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_w6h4m"]
+radius = 0.25
+
+[sub_resource type="BoxMesh" id="BoxMesh_axaot"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1s3n8"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fx8bv"]
+size = Vector3(0.5, 1.8, 0.5)
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_i8hff")
 
@@ -32,12 +48,42 @@ shadow_enabled = true
 
 [node name="Ground" type="StaticBody3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+[node name="GroundPlane" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("PlaneMesh_2sheo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_ecctn")
+
+[node name="Player" type="RigidBody3D" parent="."]
+
+[node name="SphereRigidBody" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03629, -3.37165)
+linear_velocity = Vector3(0, 0, 10)
+
+[node name="Sphere" type="MeshInstance3D" parent="SphereRigidBody"]
+mesh = SubResource("SphereMesh_5x4td")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SphereRigidBody"]
+shape = SubResource("SphereShape3D_w6h4m")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.741299, 2.3233, -3.62658)
+mass = 100.0
+gravity_scale = 0.1
+linear_velocity = Vector3(3, 0, 0)
+angular_velocity = Vector3(3.14159, 3.14159, 3.14159)
+
+[node name="Box" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0979811, 0)
+mesh = SubResource("BoxMesh_axaot")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_1s3n8")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
@@ -48,3 +94,6 @@ tracker = &"left_hand"
 
 [node name="RightController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"right_hand"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D"]
+shape = SubResource("BoxShape3D_fx8bv")
